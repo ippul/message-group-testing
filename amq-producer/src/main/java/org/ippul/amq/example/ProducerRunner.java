@@ -9,13 +9,14 @@ public class ProducerRunner {
         final String[] queueNames = ProducerRunner.getEnvOrDefault("QUEUE_NAMES", "GROUPING_QUEUE,NOT_GROUPING_QUEUE").split(",");
 
         for(int count = 0; count < producerThreadCount; count++){
-            Producer producer = new Producer(count, amqUser, amqPassword, amqPassword, queueNames[count%queueNames.length]);
+            Producer producer = new Producer(count, "tcp://amq-broker-example-hdls-svc:61616", amqUser, amqPassword, queueNames[count%queueNames.length]);
             producer.start();
         }
 
     }
 
     private static String getEnvOrDefault(String envName, String defaultValue) {
+        System.out.println(envName + ": " + System.getenv(envName) != null ? System.getenv(envName) : defaultValue);
         return System.getenv(envName) != null ? System.getenv(envName) : defaultValue;
     }
 }
