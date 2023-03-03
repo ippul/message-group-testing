@@ -1,0 +1,33 @@
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemisAddress
+metadata:
+  name: dlq-adderss
+spec:
+  addressName: DLQ
+  queueName: DLQ
+  applyToCrNames:
+    - amq-broker-example
+  routingType: anycast
+---
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemisAddress
+metadata:
+  name: grouping-queue-adderss
+spec:
+  addressName: GROUPING_QUEUE
+  queueName: GROUPING_QUEUE
+  applyToCrNames:
+    - amq-broker-example
+  routingType: anycast
+---
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemisAddress
+metadata:
+  name: not-grouping-queue-adderss
+spec:
+  addressName: NOT_GROUPING_QUEUE
+  queueName: NOT_GROUPING_QUEUE
+  applyToCrNames:
+    - amq-broker-example
+  routingType: anycast
+---

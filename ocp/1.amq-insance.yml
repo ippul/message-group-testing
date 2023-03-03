@@ -1,0 +1,55 @@
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemis
+metadata:
+  application: amq-broker-example
+  name: amq-broker-example
+spec:
+  version: 7.10.x
+  console:
+    expose: true
+    sslEnabled: false
+  deploymentPlan:
+    image: placeholder
+    size: 1
+    requireLogin: true
+    persistenceEnabled: false
+    journalType: nio
+    messageMigration: false
+    jolokiaAgentEnabled: false
+    managementRBACEnabled: false
+  addressSettings:
+    applyRule: merge_all
+    addressSetting:
+      - match: '#'
+        maxDeliveryAttempts: 10
+        maxRedeliveryDelay: 3600000
+      - match: 'GROUPING_QUEUE'
+        deadLetterAddress: 'DLQ'
+        expiryAddress: 'ExpiryQueue'
+        redeliveryDelay: 300000
+        maxDeliveryAttempts: 12
+        maxSizeBytes: '314572800'
+        pageSizeBytes: '104857600'
+        pageMaxCacheSize: 1
+        messageCounterHistoryDayLimit: 10
+        addressFullPolicy: 'PAGE'
+        autoCreateQueues: true
+        autoCreateAddresses: true
+        autoCreateJmsQueues: true
+        autoCreateJmsTopics: true
+        defaultGroupRebalance: true
+        defaultGroupBuckets: 10
+      - match: 'NOT_GROUPING_QUEUE'
+        deadLetterAddress: 'DLQ'
+        expiryAddress: 'ExpiryQueue'
+        redeliveryDelay: 300000
+        maxDeliveryAttempts: 12
+        maxSizeBytes: '314572800'
+        pageSizeBytes: '104857600'
+        pageMaxCacheSize: 1
+        messageCounterHistoryDayLimit: 10
+        addressFullPolicy: 'PAGE'
+        autoCreateQueues: true
+        autoCreateAddresses: true
+        autoCreateJmsQueues: true
+        autoCreateJmsTopics: true
